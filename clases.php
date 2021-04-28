@@ -29,11 +29,11 @@
   <div class="d-flex flex-column flex-md-row align-items-center p-4 px-md-4 bg-dark border-bottom shadow">
     <h5 class="ml-lg-5 pl-lg-5 my-0 mr-md-auto font-weight-normal text-white">LOGO</h5>
     <nav class="my-2 my-md-0 mr-md-3">
-      <a class="px-2 text-white" href="cursos.php">Inicio</a>
+      <a class="px-2 text-white" href="inicio.php">Inicio</a>
       <!-- En duda -->
       <a class="px-2 text-white" href="#">Mis Materias</a>
       <!--  -->
-      <a class="mr-lg-5 pr-lg-5 pl-4 text-light" href="login_profesor.html">Cerrar Sesión</a>
+      <a class="mr-lg-5 pr-lg-5 pl-4 text-light" href="index.php">Cerrar Sesión</a>
     </nav>
   </div>
 
