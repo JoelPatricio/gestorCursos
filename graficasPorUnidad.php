@@ -27,7 +27,9 @@
 <body>
   <!-- Barra de navegación -->
   <div class="d-flex flex-column flex-md-row align-items-center p-4 px-md-4 bg-dark border-bottom shadow">
-    <h5 class="ml-lg-5 pl-lg-5 my-0 mr-md-auto font-weight-normal text-white">LOGO</h5>
+    <h5 class="ml-lg-5 pl-lg-5 my-0 mr-md-auto font-weight-normal text-white"><div class="col col-lg-2">
+      <img src="resurce\rs=w 400,cg true.webp" class="img-fluid" alt="...">
+    </div></h5>
     <nav class="my-2 my-md-0 mr-md-3">
       <a class="px-2 text-white" href="cursos.php">Inicio</a>
       <!-- En duda -->
