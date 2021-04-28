@@ -1,30 +1,3 @@
-<?php
-  require('../config/php/conexion.php');
-  session_start();
-  $idProfesor=$_SESSION['userid'];
-
-  if(!empty($_POST['nombre']) && !empty($_POST['codigo']) && !empty($_POST['periodo'])){
-    $nombre=$_POST['nombre'];
-    $codigo=$_POST['codigo'];
-    $periodo=$_POST['periodo'];
-    if($periodo=="Primavera"){
-      $periodo="1";
-    }
-    elseif($periodo=="Verano"){
-      $periodo="2";
-    }
-    else{
-      $periodo="3";
-    }
-
-    $ano="2020";
-    $estadoCurso="1";
-    $result1=$conn->query("INSERT INTO curso (idCurso,nombre,year,idPeriodo,idProfesor,idEstadoCurso) VALUES ('$codigo','$nombre','$ano','$periodo','$idProfesor','$estadoCurso')");
-    
-    header("location: cursos.php");
-    
-  }
-?>
 <!DOCTYPE html>
 <html lang="es_MX">
 
@@ -52,22 +25,6 @@
 </head>
 
 <body>
-  <script type="text/javascript">
-  window.addEventListener("load", cargaPagina);
-  function cargaPagina() {
-      var btn = document.getElementById("generar").addEventListener("click", cambiaValores);
-  }
-  function cambiaValores() {
-      var inputNombre = document.getElementById("codigo");
-      var str = "1234567890";
-      var clave="";
-      //Reconstruimos la contraseña segun la longitud que se quiera
-      for($i=0;$i<8;$i++) {
-        clave+=str.charAt(Math.random()*str.length);
-        } 
-      inputNombre.value=clave;
-  }
-</script>
   <!-- Barra de navegación -->
   <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 bg-dark border-bottom shadow">
     <h5 class="ml-lg-5 pl-lg-5 my-0 mr-md-auto font-weight-normal text-white">CES</h5>

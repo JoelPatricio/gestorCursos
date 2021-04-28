@@ -27,22 +27,21 @@
   <title>Profesor</title>
 </head>
 
-<body class="container bg-light">
+<body class="bg-light">
 
-<div class="container">
-  <div class="row">
-    <div class="col-sm">
-      logo
-    </div>
-    <div class="col col-lg-4 text-right">
-      <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="button" class="btn btn-primary">Incio</button>
-        <button type="button" class="btn btn-primary">Mis Cursos</button>
-        <button type="button" class="btn btn-primary">Cerrar Sesión</button>
-      </div>
-    </div>
+  <!-- Barra de navegación -->
+  <div class="d-flex flex-column flex-md-row align-items-center p-4 px-md-4 bg-dark border-bottom shadow">
+    <h5 class="ml-lg-5 pl-lg-5 my-0 mr-md-auto font-weight-normal text-white">LOGO</h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+      <a class="px-2 text-white" href="cursos.php">Inicio</a>
+      <!-- En duda -->
+      <a class="px-2 text-white" href="#">Mis Materias</a>
+      <!--  -->
+      <a class="mr-lg-5 pr-lg-5 pl-4 text-light" href="login_profesor.html">Cerrar Sesión</a>
+    </nav>
   </div>
-</div>
+
+
 <br><br><br><br><br>
 <div class="container">
   <div class="row">
