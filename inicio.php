@@ -50,7 +50,7 @@
         <div class="card-body">
           <h5 class="card-title">Bienvenida</h5>
             <p class="card-text text-justify">Bienvenido puede registrar la materia que imparte, registrar a sus alumnos y sus calificaciones, registra la rubrica con la que se les evalua.
-              <br>Con el objetivo de definir el rendimiento a cada uno de ellos. Se le indicara que opciones tiene para mejorar el rendimiento dependiendo de los resultados.
+              <br><br>Con el objetivo de definir el rendimiento a cada uno de ellos. Se le indicara que opciones tiene para mejorar el rendimiento dependiendo de los resultados.
             </p>
           <div class="text-right">
           <a href="#" class="btn btn-primary">Registrar materia</a>
