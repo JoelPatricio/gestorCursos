@@ -50,32 +50,6 @@
 
 <br><br><br>
     
-    <!-- Cursos -->
-
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 row-cols-xl-4">
-    <div class="col mb-4">
-        <div class="card shadow-lg">
-            <div class="card-body text-center">
-                <h2 class="h4 font-weight-light mb-1">Nombre materia</h2>
-        			<p class="text-dark m-1 mb-3">26 estudiantes</p>
-        			<a href="contenidoMateria.php" class="btn btn-outline-info btn-block">Ver curso</a>
-         	</div>
-        </div>
-    </div>
-
-    <div class="col mb-4">
-        <div class="card shadow-lg">
-            <div class="card-body text-center">
-                <h2 class="h4 font-weight-light mb-1">Nombre materia</h2>
-        			<p class="text-dark m-1 mb-3">26 estudiantes</p>
-        			<a href="#" class="btn btn-outline-info btn-block">Ver curso</a>
-         	</div>
-        </div>
-    </div>
-
-
-</div>
-
 
 
 </body>
