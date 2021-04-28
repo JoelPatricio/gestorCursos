@@ -48,9 +48,9 @@
     <div class="col-sm">
       <div class="card col-8">
         <div class="card-body">
-          <h5 class="card-title">Bienvenida</h5>
-            <p class="card-text text-justify">Bienvenido puede registrar la materia que imparte, registrar a sus alumnos y sus calificaciones, registra la rubrica con la que se les evalua.
-              <br>Con el objetivo de definir el rendimiento a cada uno de ellos. Se le indicara que opciones tiene para mejorar el rendimiento dependiendo de los resultados.
+          <h5 class="card-title">BIENVENIDA</h5>
+            <p class="card-text text-justify">Bienvenido a su sistema donde puede registrar las materias que imparte, a sus alumnos, calificaciones y la rubrica con la que evalua.
+              <br><br>Con el objetivo de definir el rendimiento de sus alumnos conforme a su rúbrica. Se le indicara que opciones tiene para mejorar su rendimiento dependiendo de los resultados.
             </p>
           <div class="text-right">
           <a href="#" class="btn btn-primary">Registrar materia</a>
