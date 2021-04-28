@@ -26,15 +26,14 @@
 
 <body>
   <!-- Barra de navegación -->
-  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 bg-dark border-bottom shadow">
-    <h5 class="ml-lg-5 pl-lg-5 my-0 mr-md-auto font-weight-normal text-white">CES</h5>
+  <div class="d-flex flex-column flex-md-row align-items-center p-4 px-md-4 bg-dark border-bottom shadow">
+    <h5 class="ml-lg-5 pl-lg-5 my-0 mr-md-auto font-weight-normal text-white">LOGO</h5>
     <nav class="my-2 my-md-0 mr-md-3">
-      <a class="px-2 text-white" href="cursos.php">Cursos</a>
+      <a class="px-2 text-white" href="cursos.php">Inicio</a>
       <!-- En duda -->
-      <a class="px-2 text-white" href="#">Equipos</a>
-      <a class="px-2 text-white" href="#">Alumnos</a>
+      <a class="px-2 text-white" href="#">Mis Materias</a>
       <!--  -->
-      <a class="mr-lg-5 pr-lg-5 pl-4 text-light" href="login_profesor.html">Salir</a>
+      <a class="mr-lg-5 pr-lg-5 pl-4 text-light" href="login_profesor.html">Cerrar Sesión</a>
     </nav>
   </div>
 
@@ -42,42 +41,41 @@
   <div class="container-md">
     <!-- Título -->
     <div class="row justify-content-center align-items-center my-3">
-      <h1 class="font-weight-light text-center mr-3">Nuevo curso</h1>
+      <h1 class="font-weight-light text-center mr-3">Registrar Materia</h1>
     </div>
     <!-- Formulario -->
     <div class="row justify-content-center">
       <div class="col-12 col-md-10 col-lg-6">
         <form action="" class="card shadow px-3 py-4" method="POST">
           <!-- Nombre -->
-          <div class="form-group">
-            <label for="nombre">Nombre del curso</label>
-            <input required type="text" class="form-control" name="nombre" id="nombre">
-          </div>
+            <div class="form-group">
+                <label for="nombre">Nombre de la materia</label>
+                <input required type="text" class="form-control" name="nombre" id="nombre">
+            </div>
           <!-- Periodo -->
-          <div class="form-group">
-            <label for="periodo">Periodo</label>
-            <div class="input-group">
-              <select class="custom-select" id="periodo" required name="periodo">
-                <option selected disabled value="">Selecciona un periodo...</option>
-                <option value="Primavera">Primavera</option>
-                <option value="Verano">Verano</option>
-                <option value="Otono">Otoño</option>
-              </select>
-              <div class="input-group-append">
-                <span class="input-group-text">2020</span>
-              </div>
+            <div class="form-group align-self-center col-5">
+                <label for="tentacles">Unidades</label>
+                <input class="form-group" type="number" id="tentacles" name="tentacles" min="1" max="5">
             </div>
-          </div>
-          <!-- Código -->
-          <div class="form-group">
-            <label for="codigo">Código</label>
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" id="codigo" required name="codigo">
-              <div class="input-group-append">
-                <button class="btn btn-outline-info" type="button" id="generar">Generar código</button>
-              </div>
+          <!-- Rubricas -->
+            <div class="row justify-content-center align-items-center my-3">
+                <h3 class="font-weight-light text-center mr-3">Rubricas de evaluación</h3>
             </div>
-          </div>
+            <div class="form-group col-4 align-self-center">
+                <label for="nombre">Examenes</label>
+                <input required type="number" class="form-control" name="nombre" id="nombre">
+            </div>
+            <div class="form-group col-4 align-self-center">
+                <label for="nombre">Tareas</label>
+                <input required type="number" class="form-control" name="nombre" id="nombre">
+            </div>
+            <div class="form-group col-4 align-self-center">
+                <label for="nombre">Asistencias</label>
+                <input required type="number" class="form-control" name="nombre" id="nombre">
+            </div>
+
+
+
           <div class="text-right">
             <input type="submit" class="btn btn-info" value="Aceptar">
             <a href="cursos.php" class="btn btn-outline-secondary">Cancelar</a>
