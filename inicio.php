@@ -59,7 +59,7 @@
     </div>
     </div>
     <div class="col col-lg-4">
-      <img src="resurce\Logo_de_la_BUAP.svg.png" class="img-fluid" alt="...">
+      <img src="resurce\rs=w 400,cg true.webp" class="img-fluid" alt="...">
     </div>
   </div>
 </div>
