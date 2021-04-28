@@ -39,11 +39,11 @@
 
 
   <!-- Contenido -->
-  <div class="container-lg">
+    <div class="container-lg">
     <!-- Titulo -->
-    <div class="row justify-content-center align-items-center my-3">
-      <h1 class="font-weight-light text-center mr-3">Mis Materias</h1>
-    </div>
+        <div class="row justify-content-center align-items-center my-3">
+            <h1 class="font-weight-light text-center mr-3">Mis Materias</h1>
+        </div>
 
 
 
@@ -57,9 +57,9 @@
         <div class="card shadow-lg">
             <div class="card-body text-center">
                 <h2 class="h4 font-weight-light mb-1">Nombre materia</h2>
-        			<p class="text-dark m-1 mb-3">26 estudiantes</p>
-        			<a href="contenidoMateria.php" class="btn btn-outline-info btn-block">Ver curso</a>
-         	</div>
+                    <p class="text-dark m-1 mb-3">26 estudiantes</p>
+                    <a href="contenidoMateria.php" class="btn btn-outline-info btn-block">Ver curso</a>
+            </div>
         </div>
     </div>
 

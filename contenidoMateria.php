@@ -42,8 +42,47 @@
   <div class="container-lg">
     <!-- Titulo -->
     <div class="row justify-content-center align-items-center my-3">
-      <h1 class="font-weight-light text-center mr-3">Mis Materias</h1>
+      <h1 class="font-weight-light text-center mr-3">Materia 1</h1>
     </div>
+    <div class="row justify-content-center align-items-center my-3">
+      <h3 class="font-weight-light text-center mr-3">Ver grafica general de todas las unidades
+        <button type="button" class="btn btn-outline-primary btn">Ver</button>
+      </h3>
+    </div>
+
+<br><br>
+
+
+<div class="card container">
+    <div class="card-body row">
+        <div class="col-6">
+            <h5 class="card-title">Unidad 1</h5>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-outline-primary">Ver graficas de la unidad</button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-outline-primary">Ver lista de alumnos</button>
+        </div>
+    
+    </div>
+</div>
+<div class="card container">
+    <div class="card-body row">
+        <div class="col-6">
+            <h5 class="card-title">Unidad 2</h5>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-outline-primary">Ver graficas de la unidad</button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-outline-primary">Ver lista de alumnos</button>
+        </div>
+    
+    </div>
+</div>
+
+
 
 
 
