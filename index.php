@@ -5,7 +5,6 @@ if(!empty($_POST['Matricula']) && !empty($_POST['Contraseña'])){
 	$Usuario=$_POST['Matricula'];
 	$passUsuario=$_POST['Contraseña'];
 	if($result1=$conn->query("CALL login('$Usuario','$passUsuario')")){
-
     foreach($result1 as $r1){
       if($r1[0]==1){
         $_SESSION['matricula']=$Usuario;

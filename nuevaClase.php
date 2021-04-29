@@ -1,3 +1,35 @@
+<?php
+  require('config/php/conexion.php');
+  session_start();
+
+  if(!isset($_SESSION['matricula'])){
+    header('Location: index.php');
+    exit;
+  }
+$matricula=$_SESSION['matricula'];
+if(!empty($_POST['nombreMateria']) && !empty($_POST['unidades']) && !empty($_POST['examenes']) && !empty($_POST['tareas']) && !empty($_POST['asistencias'])){
+  $nombreMateria=$_POST['nombreMateria'];
+  $unidades=$_POST['unidades'];
+  $examenes=$_POST['examenes'];
+  $tareas=$_POST['tareas'];
+  $asistencias=$_POST['asistencias'];
+
+  
+  if($result1=$conn->query("CALL nuevaMateria('$nombreMateria','$unidades','$examenes','$tareas','$asistencias','$matricula')")){
+    $_SESSION['matricula']=$Usuario;
+		header('Location: clases.php');
+  }
+  else{
+    header('Location: clases.php');
+  }
+
+}
+
+
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="es_MX">
 
@@ -27,13 +59,15 @@
 <body>
   <!-- Barra de navegación -->
   <div class="d-flex flex-column flex-md-row align-items-center p-4 px-md-4 bg-dark border-bottom shadow">
-    <h5 class="ml-lg-5 pl-lg-5 my-0 mr-md-auto font-weight-normal text-white">LOGO</h5>
+    <h5 class="ml-lg-5 pl-lg-5 my-0 mr-md-auto font-weight-normal text-white"><div class="col col-lg-2">
+      <img src="resurce\rs=w 400,cg true.webp" class="img-fluid" alt="...">
+    </div></h5>
     <nav class="my-2 my-md-0 mr-md-3">
-      <a class="px-2 text-white" href="cursos.php">Inicio</a>
+      <a class="px-2 text-white" href="inicio.php">Inicio</a>
       <!-- En duda -->
-      <a class="px-2 text-white" href="#">Mis Materias</a>
+      <a class="px-2 text-white" href="clases.php">Mis Materias</a>
       <!--  -->
-      <a class="mr-lg-5 pr-lg-5 pl-4 text-light" href="login_profesor.html">Cerrar Sesión</a>
+      <a class="mr-lg-5 pr-lg-5 pl-4 text-light" href="config\php\logout.php">Cerrar Sesión</a>
     </nav>
   </div>
 
@@ -46,39 +80,37 @@
     <!-- Formulario -->
     <div class="row justify-content-center">
       <div class="col-12 col-md-10 col-lg-6">
-        <form action="" class="card shadow px-3 py-4" method="POST">
+        <form class="card shadow px-3 py-4" method="POST">
           <!-- Nombre -->
             <div class="form-group">
                 <label for="nombre">Nombre de la materia</label>
-                <input required type="text" class="form-control" name="nombre" id="nombre">
+                <input required type="text" class="form-control" name="nombreMateria" id="nombreMateria">
             </div>
           <!-- Periodo -->
-            <div class="form-group align-self-center col-5">
+            <div class="align-self-center col-5">
                 <label for="tentacles">Unidades</label>
-                <input class="form-group" type="number" id="tentacles" name="tentacles" min="1" max="5">
+                <input class="form-group text-center" type="number" id="unidades" name="unidades" min="1" max="5" required>
             </div>
           <!-- Rubricas -->
             <div class="row justify-content-center align-items-center my-3">
                 <h3 class="font-weight-light text-center mr-3">Rubricas de evaluación</h3>
             </div>
-            <div class="form-group col-4 align-self-center">
+            <div class="col-4 align-self-center">
                 <label for="nombre">Examenes</label>
-                <input required type="number" class="form-control" name="nombre" id="nombre">
+                <input required type="number" class="form-group text-center" name="examenes" id="examenes" min="0" max="100">
             </div>
-            <div class="form-group col-4 align-self-center">
+            <div class=" col-4 align-self-center">
                 <label for="nombre">Tareas</label>
-                <input required type="number" class="form-control" name="nombre" id="nombre">
+                <input required type="number" class="form-group text-center" name="tareas" id="tareas" min="0" max="100">
             </div>
-            <div class="form-group col-4 align-self-center">
+            <div class="col-4 align-self-center">
                 <label for="nombre">Asistencias</label>
-                <input required type="number" class="form-control" name="nombre" id="nombre">
+                <input required type="number" class="form-group text-center" name="asistencias" id="asistencias" min="0" max="100">
             </div>
-
-
 
           <div class="text-right">
-            <input type="submit" class="btn btn-info" value="Aceptar">
-            <a href="cursos.php" class="btn btn-outline-secondary">Cancelar</a>
+            <input type="submit" class="btn btn-primary" value="Aceptar">
+            <a href="inicio.php" class="btn btn-outline-secondary">Cancelar</a>
           </div>
         </form>
       </div>

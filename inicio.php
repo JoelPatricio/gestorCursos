@@ -65,7 +65,7 @@
               <br><br>Con el objetivo de definir el rendimiento a cada uno de ellos. Se le indicara que opciones tiene para mejorar el rendimiento dependiendo de los resultados.
             </p>
           <div class="text-right">
-          <a href="#" class="btn btn-primary">Registrar materia</a>
+          <a href="nuevaClase.php" class="btn btn-primary">Registrar materia</a>
         </div>
       </div>
     </div>
