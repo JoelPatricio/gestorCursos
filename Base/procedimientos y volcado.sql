@@ -16,6 +16,7 @@ END$$
 
 --CALL login('A5ACB920483','n95110b1n');	
 --DROP PROCEDURE nombre_procedimiento
+--show procedure status;
 
 DELIMITER $$
 CREATE PROCEDURE nuevaMateria(IN nombreIN VARCHAR(45), IN unidadesIN INT, IN examenesIN INT, IN tareasIN INT, IN asistenciasIN INT, IN matriculaIN VARCHAR(45))
@@ -24,4 +25,27 @@ BEGIN
         cursos (nombre, unidades,examen,tareas,asistencias,registro_matricula)
     VALUES
     	(nombreIN,unidadesIN,examenesIN,tareasIN,asistenciasIN,matriculaIN);
+END$$
+
+DELIMITER $$
+CREATE PROCEDURE mostrarCursos(IN matriculaIN VARCHAR(45))
+BEGIN
+    SELECT
+    	*
+    FROM
+        cursos
+    WHERE
+    	registro_matricula=matriculaIN;
+END$$
+
+
+DELIMITER $$
+CREATE PROCEDURE alumnosRegistrados(IN matriculaIN VARCHAR(45))
+BEGIN
+    SELECT
+    	* 
+    FROM
+    	alumnos AS a 
+    INNER JOIN cursos on a.cursos_idcursos=idcursos 
+    where registro_matricula=matriculaIN;
 END$$

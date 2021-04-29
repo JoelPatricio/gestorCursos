@@ -6,8 +6,8 @@
     header('Location: index.php');
     exit;
   }
+  $matricula= $_SESSION['matricula'];
 
-echo $_SESSION['matricula'];
 ?>
 <!DOCTYPE html>
 <html lang="es_MX">
@@ -65,27 +65,76 @@ echo $_SESSION['matricula'];
     
     <!-- Cursos -->
 
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 row-cols-xl-4">
+
+  <?php 
+    $result1=$conn->query("CALL mostrarCursos('$matricula')");
+    $result11=$result1;
+    $res=$result11->fetch(PDO::FETCH_ASSOC);
+     if(!isset($res['nombre'])){
+      ?>
+
+        <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title mb-4">No tienes materias registradas</h5>
+            <a href="nuevaClase.php" class="btn btn-primary mb-3">Crea tu primera Materia</a>
+          </div>
+        </div>
+
+      <?php
+      }
+      
+      else{
+?>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 row-cols-xl-4">
+<?php
+    $result1->closeCursor();
+    $result2=$conn->query("CALL mostrarCursos('$matricula')");
+    foreach($result2 as $r1){
+      $nombre=$r1['nombre'];
+      $unidades=$r1['unidades'];
+      $examen=$r1['examen'];
+      $tareas=$r1['tareas'];
+      $asistencias=$r1['asistencias'];
+
+
+    ?>
     <div class="col mb-4">
         <div class="card shadow-lg">
             <div class="card-body text-center">
-                <h2 class="h4 font-weight-light mb-1">Nombre materia</h2>
-                    <p class="text-dark m-1 mb-3">26 estudiantes</p>
-                    <a href="contenidoMateria.php" class="btn btn-outline-info btn-block">Ver curso</a>
+                <h2 class="h4 font-weight-light mb-1"><?php echo $nombre; ?></h2>
+                <span class="badge badge-pill badge-info mb-2">Unidades: <?php echo $unidades; ?></span>
+                <ul class="list-group">
+                  <li class="list-group-item disabled" aria-disabled="true">
+                    <h3 class="h5 font-weight-light">Evaluación</h3>
+                    <span class="badge badge-light"><?php echo $examen; ?>% Examenes</span>
+                    <span class="badge badge-light"><?php echo $tareas; ?>% Tareas</span>
+                    <span class="badge badge-light"><?php echo $asistencias; ?>% Asistencias</span>
+                  </li>
+                </ul>
+
+                <?php 
+                  /*$result2=$conn->query("CALL alumnosRegistrados('$matricula')");
+                  foreach($result2 as $r2){
+                    print_r($r2);
+                  }
+                  */
+                ?>
+              <p class="text-dark m-1 mb-3">26 estudiantes</p>
+              <a href="#" class="btn btn-primary mb-2">Ver curso</a><br>
+              <a href="#" class="btn btn-danger">Eliminar curso</a>
             </div>
         </div>
     </div>
 
-    <div class="col mb-4">
-        <div class="card shadow-lg">
-            <div class="card-body text-center">
-                <h2 class="h4 font-weight-light mb-1">Nombre materia</h2>
-        			<p class="text-dark m-1 mb-3">26 estudiantes</p>
-        			<a href="#" class="btn btn-outline-info btn-block">Ver curso</a>
-         	</div>
-        </div>
-    </div>
 
+
+    <?php
+      }
+		}
+
+		
+    
+  ?>
 
 </div>
 

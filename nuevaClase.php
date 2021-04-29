@@ -1,4 +1,5 @@
 <?php
+  header("Content-Type: text/html;charset=utf-8");
   require('config/php/conexion.php');
   session_start();
 
@@ -16,11 +17,7 @@ if(!empty($_POST['nombreMateria']) && !empty($_POST['unidades']) && !empty($_POS
 
   
   if($result1=$conn->query("CALL nuevaMateria('$nombreMateria','$unidades','$examenes','$tareas','$asistencias','$matricula')")){
-    $_SESSION['matricula']=$Usuario;
 		header('Location: clases.php');
-  }
-  else{
-    header('Location: clases.php');
   }
 
 }
