@@ -1,3 +1,23 @@
+<?php
+session_start();
+require('config/php/conexion.php');
+if(!empty($_POST['Matricula']) && !empty($_POST['Contraseña'])){
+	$Usuario=$_POST['Matricula'];
+	$passUsuario=$_POST['Contraseña'];
+	if($result1=$conn->query("CALL login('$Usuario','$passUsuario')")){
+
+    foreach($result1 as $r1){
+      if($r1[0]==1){
+        $_SESSION['matricula']=$Usuario;
+				header('Location: inicio.php');
+      }
+      else{
+        echo "INcorrecto".$Usuario;
+      }
+		}
+	}	
+}
+?>
 <!DOCTYPE html>
 <html lang="es_MX">
 
@@ -33,16 +53,17 @@
       <h1 class="text-primary text-center h2 mb-3">Inicia sesión</h1>
       <div class="card shadow mb-3 bg-white">
         <div class="card-body">
-          <form>
+          <form method="POST"  id="login">
             <div class="form-group">
               <label for="Correo">ID de trabajador</label>
-              <input type="email" class="form-control" name="Correo" id="Correo">
+              <input type="text" class="form-control" name="Matricula" id="Matricula">
             </div>
             <div class="form-group">
               <label for="Contraseña">Contraseña</label>
-              <input type="password" class="form-control" name="Contraseña" id="Contraseña" autocomplete="on">
+              <input type="password" class="form-control" name="Contraseña" id="Contraseña">
             </div>
-            <button class="btn btn-primary btn-block" id="loginStartProf">Iniciar sesión</button>
+            <button type="submit" class="btn btn-primary btn-block" id="submitInicioSesion">Iniciar sesión</button>
+            
           </form>
         </div>
       </div>

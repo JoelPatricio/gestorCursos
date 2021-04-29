@@ -42,16 +42,11 @@
 
     <!-- Titulo -->
     <div class="row justify-content-center align-items-center my-3">
-      <h1 class="font-weight-light text-center mr-3">Lista de alumnos Materia 1</h1>
+      <h1 class="font-weight-light text-center mr-3">Calificaciones finales de [MATERIA]</h1>
     </div>
-    <br><br>
 
     <div class="container">
-        <div class="row">
-            <div class="col-11 text-right">
-                <button type="button" class="btn btn-outline-primary">Agregar Alumno</button>
-            </div>
-        </div>
+        
         <br><br>
         <div class="row">
             <div class="col">
@@ -68,17 +63,17 @@
   <tbody>
     <tr>
       <th scope="row">nombre1</th>
-      <td>examen1</td>
-      <td>tareas1</td>
-      <td>asistencia1</td>
-      <td>cali1</td>
+      <td class="text-center">examen1</td>
+      <td class="text-center">tareas1</td>
+      <td class="text-center">asistencia1</td>
+      <td class="text-center">cali1</td>
     </tr>
     <tr>
       <th scope="row">nombre2</th>
-      <td>examen1</td>
-      <td>tareas1</td>
-      <td>asistencia1</td>
-      <td>cali1</td>
+      <td class="text-center">examen1</td>
+      <td class="text-center">tareas1</td>
+      <td class="text-center">asistencia1</td>
+      <td class="text-center">cali1</td>
     </tr>
   </tbody>
 </table>

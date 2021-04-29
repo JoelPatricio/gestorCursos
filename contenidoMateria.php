@@ -27,7 +27,9 @@
 <body>
   <!-- Barra de navegación -->
   <div class="d-flex flex-column flex-md-row align-items-center p-4 px-md-4 bg-dark border-bottom shadow">
-    <h5 class="ml-lg-5 pl-lg-5 my-0 mr-md-auto font-weight-normal text-white">LOGO</h5>
+    <h5 class="ml-lg-5 pl-lg-5 my-0 mr-md-auto font-weight-normal text-white"><div class="col col-lg-2">
+      <img src="resurce\rs=w 400,cg true.webp" class="img-fluid" alt="...">
+    </div></h5>
     <nav class="my-2 my-md-0 mr-md-3">
       <a class="px-2 text-white" href="cursos.php">Inicio</a>
       <!-- En duda -->
@@ -45,44 +47,102 @@
       <h1 class="font-weight-light text-center mr-3">Materia 1</h1>
     </div>
     <div class="row justify-content-center align-items-center my-3">
-      <h3 class="font-weight-light text-center mr-3">Ver grafica general de todas las unidades
-        <button type="button" class="btn btn-outline-primary btn">Ver</button>
+      <h3 class="font-weight-light text-center mr-3">Ver grafica de la materia
+        <button type="button" class="btn btn-outline-primary btn">Ver</button><br>
       </h3>
     </div>
+  </div>
 
-<br><br>
-
-
-<div class="card container">
-    <div class="card-body row">
-        <div class="col-6">
-            <h5 class="card-title">Unidad 1</h5>
-        </div>
-        <div class="col">
-            <button type="button" class="btn btn-outline-primary">Ver graficas de la unidad</button>
-        </div>
-        <div class="col">
-            <button type="button" class="btn btn-outline-primary">Ver lista de alumnos</button>
-        </div>
-    
+  <div class="container mb-4">
+    <div class="col-11 text-right">
+      <button type="button" class="btn btn-outline-primary">Agregar Alumno</button>
     </div>
-</div>
-<div class="card container">
-    <div class="card-body row">
-        <div class="col-6">
-            <h5 class="card-title">Unidad 2</h5>
+  </div>
+
+  <div class="container">
+
+    <div class="row justify-content-start">
+
+
+      <div class="col-md-auto">
+        <div class="card shadow">
+          <div class="card-body">
+            <h2 class="h4 mb-0 pb-2 text-dark border-bottom border-secondary">
+              Alumnos <span class="badge badge-pill badge-secondary">14</span>
+              <button type="button" class="btn btn-outline-primary">Calificaciones Finales</button>
+            </h2>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item py-2">JAVIER NUÑEZ ALBEROLA <a href="#" class="badge badge-danger">Eliminar</a></li>
+              <li class="list-group-item py-2">JOSE MANUEL CANTERO HERNANDEZ <a href="#" class="badge badge-danger">Eliminar</a></li>
+              <li class="list-group-item py-2">GONZALO AUGUSTO ESPINOSA <a href="#" class="badge badge-danger">Eliminar</a></li>
+              <li class="list-group-item py-2">JAVIER HURTADO ANDUJAR <a href="#" class="badge badge-danger">Eliminar</a></li>
+              <li class="list-group-item py-2">JUAN MANUEL TORRICO PARREÑO <a href="#" class="badge badge-danger">Eliminar</a></li>
+              <li class="list-group-item py-2">GABRIEL BORREGUERO BELLES <a href="#" class="badge badge-danger">Eliminar</a></li>
+              <li class="list-group-item py-2">VICTORIA MELO PIÑA <a href="#" class="badge badge-danger">Eliminar</a></li>
+              <li class="list-group-item py-2">SARA VIEIRA GALIANA <a href="#" class="badge badge-danger">Eliminar</a></li>
+            </ul>
+          </div>
         </div>
-        <div class="col">
-            <button type="button" class="btn btn-outline-primary">Ver graficas de la unidad</button>
+      </div>
+
+      <div class="col">
+        <div class="card shadow">
+          <div class="card-body">
+
+            <div class="card mb-4">
+              <div class="card-header border-light font-weight-bolder">Unidad 1</div>
+              <div class="card-body px-0 py-3">
+                <div class="row">
+                  <div class="col text-right">
+                    <button type="button" class="btn btn-outline-primary">Ver graficas de la unidad</button>
+                  </div>
+                  <div class="col text-center">
+                    <button type="button" class="btn btn-outline-primary">Ver alumnos</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="card mb-4">
+              <div class="card-header border-light font-weight-bolder">Unidad 2</div>
+              <div class="card-body px-0 py-2">
+                <div class="row">
+                  <div class="col text-right">
+                    <button type="button" class="btn btn-outline-primary">Ver graficas de la unidad</button>
+                  </div>
+                  <div class="col text-center">
+                    <button type="button" class="btn btn-outline-primary">Ver alumnos</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card mb-4">
+              <div class="card-header border-light font-weight-bolder">Unidad 3</div>
+              <div class="card-body px-0 py-2">
+                <div class="row">
+                  <div class="col text-right">
+                    <button type="button" class="btn btn-outline-primary">Ver graficas de la unidad</button>
+                  </div>
+                  <div class="col text-center">
+                    <button type="button" class="btn btn-outline-primary">Ver alumnos</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
         </div>
-        <div class="col">
-            <button type="button" class="btn btn-outline-primary">Ver lista de alumnos</button>
-        </div>
-    
+
+
+        
+
+      </div>
+
     </div>
-</div>
-
-
+  </div>
 
 
 
