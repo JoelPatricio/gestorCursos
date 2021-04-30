@@ -115,3 +115,12 @@ BEGIN
     WHERE
     	cursos_idcursos=idcursosIN;
 END$$
+
+DELIMITER $$
+CREATE PROCEDURE eliminarAlumno(IN idalumnoIN INT)
+BEGIN
+    DELETE FROM
+    	alumnos
+    WHERE 
+    	idalumnos=idalumnoIN;
+END$$

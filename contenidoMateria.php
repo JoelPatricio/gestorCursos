@@ -22,9 +22,12 @@
     foreach($result3 as $r3){
       $numeroAlumnos=$r3[0];
     }
-    $result3->closeCursor();
-    
-    
+    $result3->closeCursor(); 
+  }
+  if(isset($_GET['idAlumno'])){
+    $idAlumno=$_GET['idAlumno'];
+    $result1=$conn->query("CALL eliminarAlumno('$idAlumno')");
+    header('Location: contenidoMateria.php?clave='.$claveCurso.'');
   }
 
 ?>
@@ -79,7 +82,9 @@
     </div>
     <div class="row justify-content-center align-items-center my-3">
       <h3 class="font-weight-light text-center mr-3">Ver grafica de la materia
-        <button type="button" class="btn btn-outline-primary btn">Ver</button><br>
+        <?php
+          echo '<a href="graficaTodasUnidades.php?clave='.$claveCurso.'" class="btn btn-outline-primary">Ver</a>';
+        ?>
       </h3>
     </div>
   </div>
@@ -102,14 +107,17 @@
           <div class="card-body">
             <h2 class="h4 mb-0 pb-2 text-dark border-bottom border-secondary">
               Alumnos <span class="badge badge-pill badge-secondary"><?php echo $numeroAlumnos;?></span>
-              <button type="button" class="btn btn-outline-primary">Calificaciones Finales</button>
+              <?php
+                echo '<a href="calificacionesFinales.php?clave='.$claveCurso.'" class="btn btn-outline-primary">Calificaciones Finales</a>';
+              ?>
             </h2>
             <ul class="list-group list-group-flush">
             <?php
               $result2=$conn->query("CALL mostrarAlumnos('$claveCurso')");
               foreach($result2 as $r2){
                 $nombreAlumno=$r2['nombre'];
-                echo '<li class="list-group-item py-2"><a href="#" class="badge badge-danger"><i class="fas fa-user-times" title="Eliminar alumno"></i></a>'.' '.$nombreAlumno.'</li>';
+                $idAlumnos=$r2['idalumnos'];
+                echo '<li class="list-group-item py-2"><a href="contenidoMateria.php?clave='.$claveCurso.'&idAlumno='.$idAlumnos.'" class="badge badge-danger"><i class="fas fa-user-times" title="Eliminar alumno"></i></a>'.' '.$nombreAlumno.'</li>';
               }
               $result2->closeCursor();
             ?>
@@ -134,10 +142,14 @@
               <div class="card-body px-0 py-3">
                 <div class="row">
                   <div class="col text-right">
-                    <button type="button" class="btn btn-outline-primary">Ver graficas de la unidad</button>
+                    <?php
+                      echo '<a href="graficasPorUnidad.php?clave='.$claveCurso.'" class="btn btn-outline-primary">Ver graficas de la unidad</a>';
+                    ?>
                   </div>
                   <div class="col text-center">
-                    <button type="button" class="btn btn-outline-primary">Ver alumnos</button>
+                    <?php
+                      echo '<a href="alumnosUnidades.php?clave='.$claveCurso.'" class="btn btn-outline-primary">Ver alumnos</a>';
+                    ?>
                   </div>
                 </div>
               </div>

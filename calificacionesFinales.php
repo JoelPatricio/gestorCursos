@@ -1,3 +1,31 @@
+<?php  
+  require('config/php/conexion.php');
+  session_start();
+
+  if(!isset($_SESSION['matricula'])){
+    header('Location: index.php');
+    exit;
+  }
+  $matricula= $_SESSION['matricula'];
+  if(isset($_GET['clave'])){
+    $claveCurso=$_GET['clave'];
+    $result1=$conn->query("CALL mostrarCurso('$claveCurso')");
+    foreach($result1 as $r1){
+      $nombre=$r1['nombre'];
+      $unidades=$r1['unidades'];
+      $examen=$r1['examen'];
+      $tareas=$r1['tareas'];
+      $asistencias=$r1['asistencias'];
+    }
+    $result1->closeCursor();
+    $result3=$conn->query("CALL contarAlumnos('$claveCurso')");
+    foreach($result3 as $r3){
+      $numeroAlumnos=$r3[0];
+    }
+    $result3->closeCursor(); 
+  }
+
+?>
 <!DOCTYPE html>
 <html lang="es_MX">
 
@@ -31,11 +59,11 @@
       <img src="resurce\rs=w 400,cg true.webp" class="img-fluid" alt="...">
     </div></h5>
     <nav class="my-2 my-md-0 mr-md-3">
-      <a class="px-2 text-white" href="cursos.php">Inicio</a>
+      <a class="px-2 text-white" href="inicio.php">Inicio</a>
       <!-- En duda -->
-      <a class="px-2 text-white" href="#">Mis Materias</a>
+      <a class="px-2 text-white" href="clases.php">Mis Materias</a>
       <!--  -->
-      <a class="mr-lg-5 pr-lg-5 pl-4 text-light" href="login_profesor.html">Cerrar Sesión</a>
+      <a class="mr-lg-5 pr-lg-5 pl-4 text-light" href="config\php\logout.php">Cerrar Sesión</a>
     </nav>
   </div>
 
