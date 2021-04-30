@@ -1,3 +1,23 @@
+<?php  
+  require('config/php/conexion.php');
+  session_start();
+
+  if(!isset($_SESSION['matricula'])){
+    header('Location: index.php');
+    exit;
+  }
+  $matricula= $_SESSION['matricula'];
+  if(isset($_GET['clave'])){
+    $claveCurso=$_GET['clave'];
+  }
+
+  if(!empty($_POST['nombre'])){
+    $nombre=$_POST['nombre'];
+    $result1=$conn->query("CALL agregarAlumno('$nombre','$claveCurso')");
+		header('Location: contenidoMateria.php?clave='.$claveCurso.'');
+  }
+
+?>
 <!DOCTYPE html>
 <html lang="es_MX">
 
@@ -31,11 +51,11 @@
       <img src="resurce\rs=w 400,cg true.webp" class="img-fluid" alt="...">
     </div></h5>
     <nav class="my-2 my-md-0 mr-md-3">
-      <a class="px-2 text-white" href="cursos.php">Inicio</a>
+      <a class="px-2 text-white" href="inicio.php">Inicio</a>
       <!-- En duda -->
-      <a class="px-2 text-white" href="#">Mis Materias</a>
+      <a class="px-2 text-white" href="clases.php">Mis Materias</a>
       <!--  -->
-      <a class="mr-lg-5 pr-lg-5 pl-4 text-light" href="login_profesor.html">Cerrar Sesión</a>
+      <a class="mr-lg-5 pr-lg-5 pl-4 text-light" href="config\php\logout.php">Cerrar Sesión</a>
     </nav>
   </div>
 
@@ -54,24 +74,11 @@
                 <label for="nombre">Nombre completo</label>
                 <input required type="text" class="form-control" name="nombre" id="nombre">
             </div>
-            <div class="form-group col-5 align-self-center">
-                <label for="nombre">Puntuación de Examenes</label>
-                <input required type="number" class="form-control" name="nombre" id="nombre">
-            </div>
-            <div class="form-group col-5 align-self-center">
-                <label for="nombre">Puntuación de Tareas</label>
-                <input required type="number" class="form-control" name="nombre" id="nombre">
-            </div>
-            <div class="form-group col-5 align-self-center">
-                <label for="nombre">Puntuación de Asistencias</label>
-                <input required type="number" class="form-control" name="nombre" id="nombre">
-            </div>
-
-
-
           <div class="text-right">
-            <input type="submit" class="btn btn-info" value="Aceptar">
-            <a href="cursos.php" class="btn btn-outline-secondary">Cancelar</a>
+            <input type="submit" class="btn btn-primary" value="Aceptar">
+            <?php
+            echo '<a href="contenidoMateria.php?clave='.$claveCurso.'" class="btn btn-outline-secondary">Cancelar</a>';
+            ?>
           </div>
         </form>
       </div>

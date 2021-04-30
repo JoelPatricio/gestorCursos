@@ -7,6 +7,11 @@
     exit;
   }
   $matricula= $_SESSION['matricula'];
+  if(isset($_GET['clave'])){
+    $idCurso=$_GET['clave'];
+    $result1=$conn->query("CALL eliminarCurso('$idCurso')");
+    header('Location: clases.php');
+  }
 
 ?>
 <!DOCTYPE html>
@@ -62,7 +67,8 @@
 
 
 
-<br><br><br>
+
+<br>
     
     <!-- Cursos -->
 
@@ -86,11 +92,20 @@
       
       else{
 ?>
+  <div class="container mb-4">
+    <div class="col-11 text-right">
+    <?php
+      echo '<a href="nuevaClase.php" class="btn btn-primary">Agregar Clase</a>';
+    ?>
+    </div>
+  </div>
+
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 row-cols-xl-4">
 <?php
     $result1->closeCursor();
     $result2=$conn->query("CALL mostrarCursos('$matricula')");
     foreach($result2 as $r1){
+      $idcursos=$r1['idcursos'];
       $nombre=$r1['nombre'];
       $unidades=$r1['unidades'];
       $examen=$r1['examen'];
@@ -104,7 +119,7 @@
             <div class="card-body text-center">
                 <h2 class="h4 font-weight-light mb-1"><?php echo $nombre; ?></h2>
                 <span class="badge badge-pill badge-info mb-2">Unidades: <?php echo $unidades; ?></span>
-                <ul class="list-group">
+                <ul class="list-group mb-3">
                   <li class="list-group-item disabled" aria-disabled="true">
                     <h3 class="h5 font-weight-light">Evaluación</h3>
                     <span class="badge badge-light"><?php echo $examen; ?>% Examenes</span>
@@ -112,17 +127,10 @@
                     <span class="badge badge-light"><?php echo $asistencias; ?>% Asistencias</span>
                   </li>
                 </ul>
-
-                <?php 
-                  /*$result2=$conn->query("CALL alumnosRegistrados('$matricula')");
-                  foreach($result2 as $r2){
-                    print_r($r2);
-                  }
-                  */
-                ?>
-              <p class="text-dark m-1 mb-3">26 estudiantes</p>
-              <a href="#" class="btn btn-primary">Ver curso</a>
-              <a href="#" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>
+              <?php
+              echo '<a href="contenidoMateria.php?clave='.$idcursos.'" class="btn btn-primary">Ver curso</a>';
+              echo '<a href="clases.php?clave='.$idcursos.'" class="btn btn-danger"><i class="far fa-trash-alt"></i></a>';
+              ?>
             </div>
         </div>
     </div>
@@ -131,6 +139,7 @@
 
     <?php
       }
+      $result2->closeCursor();
 		}
 
 		

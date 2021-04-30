@@ -1,3 +1,33 @@
+<?php  
+  require('config/php/conexion.php');
+  session_start();
+
+  if(!isset($_SESSION['matricula'])){
+    header('Location: index.php');
+    exit;
+  }
+  $matricula= $_SESSION['matricula'];
+  if(isset($_GET['clave'])){
+    $claveCurso=$_GET['clave'];
+    $result1=$conn->query("CALL mostrarCurso('$claveCurso')");
+    foreach($result1 as $r1){
+      $nombre=$r1['nombre'];
+      $unidades=$r1['unidades'];
+      $examen=$r1['examen'];
+      $tareas=$r1['tareas'];
+      $asistencias=$r1['asistencias'];
+    }
+    $result1->closeCursor();
+    $result3=$conn->query("CALL contarAlumnos('$claveCurso')");
+    foreach($result3 as $r3){
+      $numeroAlumnos=$r3[0];
+    }
+    $result3->closeCursor();
+    
+    
+  }
+
+?>
 <!DOCTYPE html>
 <html lang="es_MX">
 
@@ -21,6 +51,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
     integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
     crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/cfa31df702.js" crossorigin="anonymous"></script>
   <title>Cursos</title>
 </head>
 
@@ -31,11 +62,11 @@
       <img src="resurce\rs=w 400,cg true.webp" class="img-fluid" alt="...">
     </div></h5>
     <nav class="my-2 my-md-0 mr-md-3">
-      <a class="px-2 text-white" href="cursos.php">Inicio</a>
+      <a class="px-2 text-white" href="inicio.php">Inicio</a>
       <!-- En duda -->
-      <a class="px-2 text-white" href="#">Mis Materias</a>
+      <a class="px-2 text-white" href="clases.php">Mis Materias</a>
       <!--  -->
-      <a class="mr-lg-5 pr-lg-5 pl-4 text-light" href="login_profesor.html">Cerrar Sesión</a>
+      <a class="mr-lg-5 pr-lg-5 pl-4 text-light" href="config\php\logout.php">Cerrar Sesión</a>
     </nav>
   </div>
 
@@ -44,7 +75,7 @@
   <div class="container-lg">
     <!-- Titulo -->
     <div class="row justify-content-center align-items-center my-3">
-      <h1 class="font-weight-light text-center mr-3">Materia 1</h1>
+      <h1 class="font-weight-light text-center mr-3"><?php echo $nombre; ?></h1>
     </div>
     <div class="row justify-content-center align-items-center my-3">
       <h3 class="font-weight-light text-center mr-3">Ver grafica de la materia
@@ -55,7 +86,9 @@
 
   <div class="container mb-4">
     <div class="col-11 text-right">
-      <button type="button" class="btn btn-outline-primary">Agregar Alumno</button>
+    <?php
+      echo '<a href="agregarAlumno.php?clave='.$claveCurso.'" class="btn btn-primary">Agregar Alumno</a>';
+    ?>
     </div>
   </div>
 
@@ -68,18 +101,18 @@
         <div class="card shadow">
           <div class="card-body">
             <h2 class="h4 mb-0 pb-2 text-dark border-bottom border-secondary">
-              Alumnos <span class="badge badge-pill badge-secondary">14</span>
+              Alumnos <span class="badge badge-pill badge-secondary"><?php echo $numeroAlumnos;?></span>
               <button type="button" class="btn btn-outline-primary">Calificaciones Finales</button>
             </h2>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item py-2">JAVIER NUÑEZ ALBEROLA <a href="#" class="badge badge-danger">Eliminar</a></li>
-              <li class="list-group-item py-2">JOSE MANUEL CANTERO HERNANDEZ <a href="#" class="badge badge-danger">Eliminar</a></li>
-              <li class="list-group-item py-2">GONZALO AUGUSTO ESPINOSA <a href="#" class="badge badge-danger">Eliminar</a></li>
-              <li class="list-group-item py-2">JAVIER HURTADO ANDUJAR <a href="#" class="badge badge-danger">Eliminar</a></li>
-              <li class="list-group-item py-2">JUAN MANUEL TORRICO PARREÑO <a href="#" class="badge badge-danger">Eliminar</a></li>
-              <li class="list-group-item py-2">GABRIEL BORREGUERO BELLES <a href="#" class="badge badge-danger">Eliminar</a></li>
-              <li class="list-group-item py-2">VICTORIA MELO PIÑA <a href="#" class="badge badge-danger">Eliminar</a></li>
-              <li class="list-group-item py-2">SARA VIEIRA GALIANA <a href="#" class="badge badge-danger">Eliminar</a></li>
+            <?php
+              $result2=$conn->query("CALL mostrarAlumnos('$claveCurso')");
+              foreach($result2 as $r2){
+                $nombreAlumno=$r2['nombre'];
+                echo '<li class="list-group-item py-2"><a href="#" class="badge badge-danger"><i class="fas fa-user-times" title="Eliminar alumno"></i></a>'.' '.$nombreAlumno.'</li>';
+              }
+              $result2->closeCursor();
+            ?>
             </ul>
           </div>
         </div>
@@ -89,8 +122,15 @@
         <div class="card shadow">
           <div class="card-body">
 
+
+
+            <?php
+              $result3=$conn->query("CALL mostrarUnidades('$claveCurso')");
+              $aux=1;
+              foreach($result3 as $r3){
+                ?>
             <div class="card mb-4">
-              <div class="card-header border-light font-weight-bolder">Unidad 1</div>
+              <div class="card-header border-light font-weight-bolder">Unidad <?php echo $aux;?></div>
               <div class="card-body px-0 py-3">
                 <div class="row">
                   <div class="col text-right">
@@ -102,36 +142,13 @@
                 </div>
               </div>
             </div>
+                <?php
+                $aux=$aux+1;
+              }
+              $result3->closeCursor();
+            ?>
 
-
-            <div class="card mb-4">
-              <div class="card-header border-light font-weight-bolder">Unidad 2</div>
-              <div class="card-body px-0 py-2">
-                <div class="row">
-                  <div class="col text-right">
-                    <button type="button" class="btn btn-outline-primary">Ver graficas de la unidad</button>
-                  </div>
-                  <div class="col text-center">
-                    <button type="button" class="btn btn-outline-primary">Ver alumnos</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="card mb-4">
-              <div class="card-header border-light font-weight-bolder">Unidad 3</div>
-              <div class="card-body px-0 py-2">
-                <div class="row">
-                  <div class="col text-right">
-                    <button type="button" class="btn btn-outline-primary">Ver graficas de la unidad</button>
-                  </div>
-                  <div class="col text-center">
-                    <button type="button" class="btn btn-outline-primary">Ver alumnos</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+            
 
           </div>
         </div>
