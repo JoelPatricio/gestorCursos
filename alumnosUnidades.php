@@ -7,9 +7,10 @@
     exit;
   }
   $matricula= $_SESSION['matricula'];
-  if(isset($_GET['clave']) && isset($_GET['idUnidad'])){
+  if(isset($_GET['clave']) && isset($_GET['idUnidad']) && isset($_GET['numUnidad'])){
     $claveCurso=$_GET['clave'];
     $idUnidad=$_GET['idUnidad'];
+    $numUnidad=$_GET['numUnidad'];
     $result1=$conn->query("CALL mostrarCurso('$claveCurso')");
     foreach($result1 as $r1){
       $nombre=$r1['nombre'];
@@ -60,23 +61,31 @@
       <img src="resurce\rs=w 400,cg true.webp" class="img-fluid" alt="...">
     </div></h5>
     <nav class="my-2 my-md-0 mr-md-3">
-      <a class="px-2 text-white" href="cursos.php">Inicio</a>
+      <a class="px-2 text-white" href="inicio.php">Inicio</a>
       <!-- En duda -->
-      <a class="px-2 text-white" href="#">Mis Materias</a>
+      <a class="px-2 text-white" href="clases.php">Mis Materias</a>
       <!--  -->
-      <a class="mr-lg-5 pr-lg-5 pl-4 text-light" href="login_profesor.html">Cerrar Sesión</a>
+      <a class="mr-lg-5 pr-lg-5 pl-4 text-light" href="config\php\logout.php">Cerrar Sesión</a>
     </nav>
   </div>
 
-
+<br><br>
     <!-- Titulo -->
-    <div class="row justify-content-center align-items-center my-3">
-      <h1 class="font-weight-light text-center mr-3">[MATERIA]/[UNIDAD]</h1>
+    <div class="row justify-content-center align-items-center my-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+        <?php
+          echo '<a href="contenidoMateria.php?clave='.$claveCurso.'">'.$nombre.'</a>';
+        ?>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Unidad <?php echo $numUnidad; ?></li>
+      </ol>
+    </nav>
     </div>
 
     <div class="container">
         
-        <br><br>
         <div class="row">
         <div class="col table-responsive">
     <table class="table table-bordered">

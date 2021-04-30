@@ -13,8 +13,25 @@
 
   if(!empty($_POST['nombre'])){
     $nombre=$_POST['nombre'];
+    $aux=0;
     $result1=$conn->query("CALL agregarAlumno('$nombre','$claveCurso')");
-		header('Location: contenidoMateria.php?clave='.$claveCurso.'');
+    foreach($result1 as $r1){
+      $idUltimoRegistro=$r1['id'];
+      echo $idUltimoRegistro;
+    }
+    $result1->closeCursor();
+    $result2=$conn->query("CALL mostrarIdUnidadesCurso('$claveCurso')");
+    $idUnidades[]=null;
+    foreach($result2 as $r2){
+      $idUnidades[]=$r2['idunidades'];
+    }
+    $result2->closeCursor();
+    foreach($idUnidades as $idUnidadesX){
+      $result3=$conn->query("CALL agregarAlumno_Unidades('$idUltimoRegistro','$idUnidadesX')");
+    }
+
+
+		//header('Location: contenidoMateria.php?clave='.$claveCurso.'');
   }
 
 ?>

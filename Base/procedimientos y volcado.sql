@@ -83,6 +83,22 @@ BEGIN
         alumnos (nombre,cursos_idcursos)
     VALUES
     	(nombreIN,idcursosIN);
+    SELECT MAX(idalumnos) AS id FROM alumnos;
+END$$
+
+DELIMITER $$
+CREATE PROCEDURE mostrarIdUnidadesCurso(IN idCurso INT)
+BEGIN
+    SELECT
+    	idunidades
+    FROM
+    	unidades
+    AS u INNER JOIN
+    	cursos
+    ON
+    	u.cursos_idcursos=idcursos
+    WHERE
+    	cursos_idcursos=idCurso;
 END$$
 
 DELIMITER $$
@@ -96,6 +112,15 @@ BEGIN
     	cursos_idcursos=idcursosIN
     ORDER BY
     	nombre ASC;
+END$$
+
+DELIMITER $$
+CREATE PROCEDURE agregarAlumno_Unidades(IN idAlumno INT, IN idUnidades INT)
+BEGIN
+    INSERT INTO
+    	alumnosCalificaciones(alumnos_idalumnos,unidades_idunidades)
+    VALUES
+    	(idAlumno,idUnidades);
 END$$
 
 DELIMITER $$
@@ -128,3 +153,4 @@ BEGIN
     WHERE 
     	idalumnos=idalumnoIN;
 END$$
+

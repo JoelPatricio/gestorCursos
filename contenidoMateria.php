@@ -149,7 +149,7 @@
                   </div>
                   <div class="col text-center">
                     <?php
-                      echo '<a href="alumnosUnidades.php?clave='.$claveCurso.'&idUnidad='.$idUnidad.'" class="btn btn-outline-primary">Ver alumnos</a>';
+                      echo '<a href="alumnosUnidades.php?clave='.$claveCurso.'&idUnidad='.$idUnidad.'&numUnidad='.$aux.'" class="btn btn-outline-primary">Ver alumnos</a>';
                     ?>
                   </div>
                 </div>
