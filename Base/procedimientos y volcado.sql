@@ -55,6 +55,10 @@ END$$
 DELIMITER $$
 CREATE PROCEDURE eliminarCurso(IN idcursosIN INT)
 BEGIN
+	DELETE FROM
+    	unidades
+    WHERE 
+    	cursos_idcursos=idcursosIN;
     DELETE FROM
     	cursos 
     WHERE 

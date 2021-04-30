@@ -136,6 +136,7 @@
               $result3=$conn->query("CALL mostrarUnidades('$claveCurso')");
               $aux=1;
               foreach($result3 as $r3){
+                $idUnidad=$r3['idunidades'];
                 ?>
             <div class="card mb-4">
               <div class="card-header border-light font-weight-bolder">Unidad <?php echo $aux;?></div>
@@ -148,7 +149,7 @@
                   </div>
                   <div class="col text-center">
                     <?php
-                      echo '<a href="alumnosUnidades.php?clave='.$claveCurso.'" class="btn btn-outline-primary">Ver alumnos</a>';
+                      echo '<a href="alumnosUnidades.php?clave='.$claveCurso.'&idUnidad='.$idUnidad.'" class="btn btn-outline-primary">Ver alumnos</a>';
                     ?>
                   </div>
                 </div>
