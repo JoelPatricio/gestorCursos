@@ -108,7 +108,9 @@
             <h2 class="h4 mb-0 pb-2 text-dark border-bottom border-secondary">
               Alumnos <span class="badge badge-pill badge-secondary"><?php echo $numeroAlumnos;?></span>
               <?php
-                echo '<a href="calificacionesFinales.php?clave='.$claveCurso.'" class="btn btn-outline-primary">Calificaciones Finales</a>';
+              if($numeroAlumnos>0){
+                  echo '<a href="calificacionesFinales.php?clave='.$claveCurso.'" class="btn btn-outline-primary">Calificaciones Finales</a>';
+              }
               ?>
             </h2>
             <ul class="list-group list-group-flush">
@@ -143,9 +145,6 @@
               <div class="card-body px-0 py-3">
                 <div class="row">
                   <div class="col text-right">
-                    <?php
-                      echo '<a href="graficasPorUnidad.php?clave='.$claveCurso.'" class="btn btn-outline-primary">Ver graficas de la unidad</a>';
-                    ?>
                   </div>
                   <div class="col text-center">
                     <?php

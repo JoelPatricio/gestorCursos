@@ -18,12 +18,14 @@
       $asistencias=$r1['asistencias'];
     }
     $result1->closeCursor();
-    $result3=$conn->query("CALL contarAlumnos('$claveCurso')");
-    foreach($result3 as $r3){
-      $numeroAlumnos=$r3[0];
-    }
-    $result3->closeCursor(); 
   }
+  $result5=$conn->query("CALL obtenerRubrosEvaluacion('$claveCurso')");
+  foreach($result5 as $r5){
+    $rubroExamen=$r5['examen'];
+    $rubroTareas=$r5['tareas'];
+    $rubroAsistencias=$r5['asistencias'];
+  }
+  $result5->closeCursor(); 
 
 ?>
 <!DOCTYPE html>
@@ -67,10 +69,28 @@
     </nav>
   </div>
 
+  <?php
+    $auxArray;
+    $result2=$conn->query("CALL mostrarAlumnos('$claveCurso')");
+    foreach($result2 as $r2){
+      $auxArray[$r2['idalumnos']]=$r2['nombre'];
+    }
+    $result2->closeCursor();
+  ?>
+
 
     <!-- Titulo -->
-    <div class="row justify-content-center align-items-center my-3">
-      <h1 class="font-weight-light text-center mr-3">Calificaciones finales de [MATERIA]</h1>
+   <div class="row justify-content-center align-items-center my-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+        <?php
+          echo '<a href="contenidoMateria.php?clave='.$claveCurso.'">'.$nombre.'</a>';
+        ?>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Calificaciones Finales</li>
+      </ol>
+    </nav>
     </div>
 
     <div class="container">
@@ -89,20 +109,52 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">nombre1</th>
-      <td class="text-center">examen1</td>
-      <td class="text-center">tareas1</td>
-      <td class="text-center">asistencia1</td>
-      <td class="text-center">cali1</td>
-    </tr>
-    <tr>
-      <th scope="row">nombre2</th>
-      <td class="text-center">examen1</td>
-      <td class="text-center">tareas1</td>
-      <td class="text-center">asistencia1</td>
-      <td class="text-center">cali1</td>
-    </tr>
+  <?php
+    foreach($auxArray as $auxArrayKey => $auxArrayContenido ){
+      $nombreAlumnos=$auxArrayContenido;
+      $idAlumno=$auxArrayKey;
+
+        $result3=$conn->query("CALL mostrarCalificacionesFinales('$idAlumno')");
+        $examenF=0;
+        $tareasF=0;
+        $asistenciasF=0;
+        foreach($result3 as $r3){
+            $examenU=$r3['calExamenes'];
+            $tareasU=$r3['calTareas'];
+            $asistenciasU=$r3['calAsistencias'];
+            if($examenU==NULL)
+              $examenU=0;
+            if($tareasU==NULL)
+              $tareasU=0;
+            if($asistenciasU==NULL)
+              $asistenciasU=0;
+            $examenF=$examenF+$examenU;
+            $tareasF=$tareasF+$tareasU;
+            $asistenciasF=$asistenciasF+$asistenciasU;
+          }
+          $result3->closeCursor();
+          $result4=$conn->query("CALL numeroUnidades('$claveCurso')");
+          foreach($result4 as $r4){
+            $numUnidades=$r4['unidades'];
+          }
+          $result4->closeCursor();
+          $examenF=$examenF/$numUnidades;
+          $tareasF=$tareasF/$numUnidades;
+          $asistenciasF=$asistenciasF/$numUnidades;
+          $calFinal=(($examenF*$rubroExamen)+($tareasF*$rubroTareas)+($asistenciasF*$rubroAsistencias))/100;        
+      ?>
+      <tr>
+        <th scope="row"><?php echo $nombreAlumnos; ?></th>
+        <td class="text-center"><?php echo $examenF; ?></td>
+        <td class="text-center"><?php echo $tareasF; ?></td>
+        <td class="text-center"><?php echo $asistenciasF; ?></td>
+        <td class="text-center"><?php echo $calFinal; ?></td>
+      </tr>
+      <?php
+    }
+    //$result3->closeCursor();
+  ?>
+
   </tbody>
 </table>
             </div>

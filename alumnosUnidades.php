@@ -26,6 +26,13 @@
     }
     $result3->closeCursor(); 
   }
+  $result5=$conn->query("CALL obtenerRubrosEvaluacion('$claveCurso')");
+  foreach($result5 as $r5){
+    $rubroExamen=$r5['examen'];
+    $rubroTareas=$r5['tareas'];
+    $rubroAsistencias=$r5['asistencias'];
+  }
+  $result5->closeCursor(); 
 
 ?>
 <!DOCTYPE html>
@@ -84,9 +91,33 @@
     </nav>
     </div>
 
+    <div class="container mb-4">
+      <div class="col-11 text-right">
+      <?php
+        echo '<a href="graficasPorUnidad.php?clave='.$claveCurso.'&idUnidad='.$idUnidad.'&numUnidad='.$numUnidad.'" class="btn btn-outline-primary">Ver grafica de la unidad</a>';
+      ?>
+      </div>
+    </div>
+
     <div class="container">
+    <?php
+      if($numeroAlumnos==0){
+        ?>
+        <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title mb-4">No tienes alumnos agregados</h5>
+            <?php
+              echo '<a href="agregarAlumno.php?clave='.$claveCurso.'" class="btn btn-primary">Agregar Alumno</a>';
+            ?>
+          </div>
+        </div>
+    <?php
+      }
+      else{
+        $result4=$conn->query("CALL mostrarAlumnosUnidad('$claveCurso','$idUnidad')");
         
-        <div class="row">
+        ?>
+          <div class="row">
         <div class="col table-responsive">
     <table class="table table-bordered">
     <thead class="thead-dark">
@@ -100,26 +131,46 @@
     </tr>
   </thead>
   <tbody>
+  <?php
+      foreach($result4 as $r4){
+        $idAlumnos=$r4['idalumnos'];
+        $nombreEstudiante=$r4['nombre'];
+        $calExamenes=$r4['calExamenes'];
+        if($calExamenes==NULL)
+          $calExamenes=0;
+        $calTareas=$r4['calTareas'];
+        if($calTareas==NULL)
+          $calTareas=0;
+        $calAsistencias=$r4['calAsistencias'];
+        if($calAsistencias==NULL)
+          $calAsistencias=0;
+        $calFinal=(($calExamenes*$rubroExamen)+($calTareas*$rubroTareas)+($calAsistencias*$rubroAsistencias))/100;
+        ?>
     <tr>
-      <th scope="row">nombre1</th>
-      <td class="text-center">examen1</td>
-      <td class="text-center">tareas1</td>
-      <td class="text-center">asistencia1</td>
-      <td class="text-center">cali1</td>
-      <td class="text-center"><input class="btn btn-primary" type="submit" value="Cambiar"></td>
+      <th scope="row"><?php echo $nombreEstudiante; ?></th>
+      <td class="text-center"><?php echo $calExamenes; ?></td>
+      <td class="text-center"><?php echo $calTareas; ?></td>
+      <td class="text-center"><?php echo $calAsistencias; ?></td>
+      <td class="text-center"><?php echo $calFinal; ?></td>
+      <td class="text-center">
+        <?php
+          echo '<a href="modificarAlumno.php?clave='.$claveCurso.'&idAlumno='.$idAlumnos.'&idUnidad='.$idUnidad.'&numUnidad='.$numUnidad.'" class="btn btn-primary">Cambiar</a>';
+        ?>
+      </td>
     </tr>
-    <tr>
-      <th scope="row">nombre2</th>
-      <td class="text-center">examen1</td>
-      <td class="text-center">tareas1</td>
-      <td class="text-center">asistencia1</td>
-      <td class="text-center">cali1</td>
-      <td class="text-center"><input class="btn btn-primary" type="submit" value="Cambiar"></td>
-    </tr>
+        <?php
+        }
+        $result4->closeCursor();
+  ?>
+    
   </tbody>
 </table>
             </div>
         </div>
+        <?php
+      }
+    ?>
+        
     </div>
 
 

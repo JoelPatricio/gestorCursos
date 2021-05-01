@@ -1,3 +1,27 @@
+<?php  
+  require('config/php/conexion.php');
+  session_start();
+
+  if(!isset($_SESSION['matricula'])){
+    header('Location: index.php');
+    exit;
+  }
+  $matricula= $_SESSION['matricula'];
+  if(isset($_GET['clave']) && isset($_GET['numUnidad'])){
+    $claveCurso=$_GET['clave'];
+    $idUnidad=$_GET['idUnidad'];
+    $aux=$_GET['numUnidad'];
+    $idAlumno=$_GET['idAlumno'];
+  }
+
+  if(!empty($_POST['examenes']) && !empty($_POST['tareas']) && !empty($_POST['asistencias'])){
+    $examenes=$_POST['examenes'];
+    $tareas=$_POST['tareas'];
+    $asistencias=$_POST['asistencias'];
+    $result1=$conn->query("CALL actualizarCalificacionUnidad('$idAlumno','$idUnidad','$examenes','$tareas','$asistencias')");
+    header('Location: alumnosUnidades.php?clave='.$claveCurso.'&idUnidad='.$idUnidad.'&numUnidad='.$aux.'');
+  }
+?>
 <!DOCTYPE html>
 <html lang="es_MX">
 
@@ -31,11 +55,11 @@
       <img src="resurce\rs=w 400,cg true.webp" class="img-fluid" alt="...">
     </div></h5>
     <nav class="my-2 my-md-0 mr-md-3">
-      <a class="px-2 text-white" href="cursos.php">Inicio</a>
+      <a class="px-2 text-white" href="inicio.php">Inicio</a>
       <!-- En duda -->
-      <a class="px-2 text-white" href="#">Mis Materias</a>
+      <a class="px-2 text-white" href="clases.php">Mis Materias</a>
       <!--  -->
-      <a class="mr-lg-5 pr-lg-5 pl-4 text-light" href="login_profesor.html">Cerrar Sesión</a>
+      <a class="mr-lg-5 pr-lg-5 pl-4 text-light" href="config\php\logout.php">Cerrar Sesión</a>
     </nav>
   </div>
 
@@ -43,7 +67,17 @@
   <div class="container-md">
     <!-- Título -->
     <div class="row justify-content-center align-items-center my-3">
-      <h2 class="font-weight-light text-center mr-3">Modificando calificación del alumno<br>[ALUMNO]</h2>
+      <h2 class="font-weight-light text-center mr-3">Modificando calificación del alumno
+      <br>
+      <?php
+        $result5=$conn->query("CALL mostrarNombreAlumno('$idAlumno')");
+        foreach($result5 as $r5){
+          $nombreAlumno=$r5['nombre'];
+        }
+        $result5->closeCursor(); 
+      ?>
+      <?php echo $nombreAlumno; ?>
+      </h2>
     </div>
     <!-- Formulario -->
     <div class="row justify-content-center">
@@ -52,22 +86,24 @@
           <!-- Nombre -->
             <div class="form-group col-5 align-self-center">
                 <label for="nombre">Puntuación de Examenes</label>
-                <input required type="number" class="form-control" name="nombre" id="nombre">
+                <input required type="number" class="form-control" name="examenes" id="examenes" min="0" max="10">
             </div>
             <div class="form-group col-5 align-self-center">
                 <label for="nombre">Puntuación de Tareas</label>
-                <input required type="number" class="form-control" name="nombre" id="nombre">
+                <input required type="number" class="form-control" name="tareas" id="tareas" min="0" max="10">
             </div>
             <div class="form-group col-5 align-self-center">
                 <label for="nombre">Puntuación de Asistencias</label>
-                <input required type="number" class="form-control" name="nombre" id="nombre">
+                <input required type="number" class="form-control" name="asistencias" id="asistencias" min="0" max="10">
             </div>
 
 
 
           <div class="text-right">
-            <input type="submit" class="btn btn-info" value="Aceptar">
-            <a href="cursos.php" class="btn btn-outline-secondary">Cancelar</a>
+            <input type="submit" class="btn btn-primary" value="Aceptar">
+            <?php
+              echo '<a href="alumnosUnidades.php?clave='.$claveCurso.'&idUnidad='.$idUnidad.'&numUnidad='.$aux.'" class="btn btn-outline-secondary">Candelar</a>';
+            ?>
           </div>
         </form>
       </div>

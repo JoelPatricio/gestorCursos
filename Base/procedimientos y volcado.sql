@@ -148,9 +148,111 @@ END$$
 DELIMITER $$
 CREATE PROCEDURE eliminarAlumno(IN idalumnoIN INT)
 BEGIN
+	DELETE FROM
+    	alumnosCalificaciones
+    WHERE 
+    	alumnos_idalumnos=idalumnoIN;
     DELETE FROM
     	alumnos
     WHERE 
     	idalumnos=idalumnoIN;
 END$$
 
+DELIMITER $$
+CREATE PROCEDURE mostrarAlumnosUnidad(IN idCursos INT,IN idUnidades INT)
+BEGIN
+	SELECT 
+		idalumnos,nombre,calExamenes,calTareas,calAsistencias
+	FROM 
+		alumnos AS a 
+	INNER JOIN
+		alumnosCalificaciones 
+	ON a.idalumnos=alumnos_idalumnos 
+	WHERE
+		cursos_idcursos=idCursos
+	AND
+		unidades_idunidades=idUnidades
+	ORDER BY
+		nombre;
+END$$
+
+DELIMITER $$
+CREATE PROCEDURE obtenerRubrosEvaluacion(IN idCursos INT)
+BEGIN
+	SELECT 
+		examen,tareas,asistencias
+	FROM 
+		cursos
+	WHERE
+		idcursos=idCursos;
+END$$
+
+DELIMITER $$
+CREATE PROCEDURE mostrarNombreAlumno(IN idAlumno INT)
+BEGIN
+	SELECT 
+		nombre
+	FROM 
+		alumnos
+	WHERE
+		idalumnos=idAlumno;
+END$$
+
+DELIMITER $$
+CREATE PROCEDURE actualizarCalificacionUnidad(IN idAlumnoIN INT,IN idUnidadIN INT,IN calExamenesIN INT,IN calTareasIN INT,IN calAsistenciasIN INT)
+BEGIN
+	UPDATE
+		alumnosCalificaciones
+	SET
+		calExamenes=calExamenesIN,calTareas=calTareasIN,calAsistencias=calAsistenciasIN
+	WHERE
+		unidades_idunidades=idUnidadIN AND alumnos_idalumnos=idAlumnoIN;
+END$$
+
+DELIMITER $$
+CREATE PROCEDURE mostrarCalificacionesFinales(IN idAlumno INT)
+BEGIN
+	select
+		calExamenes,calTareas,calAsistencias
+	from
+		alumnosCalificaciones
+	where
+		alumnos_idalumnos=idAlumno;
+END$$
+
+DELIMITER $$
+CREATE PROCEDURE numeroUnidades(IN idCursos INT)
+BEGIN
+	select
+		unidades
+	from
+		cursos
+	where
+		idCursos=idCursos;
+END$$
+
+DELIMITER $$
+CREATE PROCEDURE mostrarCalificacionesFinalesGrafica(IN idCursos INT)
+BEGIN
+	select
+		calExamenes,calTareas,calAsistencias
+	from
+		alumnosCalificaciones 
+	as a inner join
+		unidades 
+	on 
+		a.unidades_idunidades=idunidades
+	where 
+		cursos_idcursos=idCursos;
+END$$
+
+DELIMITER $$
+CREATE PROCEDURE mostrarCalificacionesUnidadGrafica(IN idUnidad INT)
+BEGIN
+	select 
+		calExamenes,calTareas,calAsistencias
+	from
+		alumnosCalificaciones
+	where
+		unidades_idunidades=idUnidad;
+END$$

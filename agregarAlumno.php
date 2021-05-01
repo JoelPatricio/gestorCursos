@@ -17,11 +17,11 @@
     $result1=$conn->query("CALL agregarAlumno('$nombre','$claveCurso')");
     foreach($result1 as $r1){
       $idUltimoRegistro=$r1['id'];
-      echo $idUltimoRegistro;
+      //echo $idUltimoRegistro;
     }
     $result1->closeCursor();
     $result2=$conn->query("CALL mostrarIdUnidadesCurso('$claveCurso')");
-    $idUnidades[]=null;
+    $idUnidades=null;
     foreach($result2 as $r2){
       $idUnidades[]=$r2['idunidades'];
     }
@@ -29,9 +29,10 @@
     foreach($idUnidades as $idUnidadesX){
       $result3=$conn->query("CALL agregarAlumno_Unidades('$idUltimoRegistro','$idUnidadesX')");
     }
+    $result2->closeCursor();
 
 
-		//header('Location: contenidoMateria.php?clave='.$claveCurso.'');
+		header('Location: contenidoMateria.php?clave='.$claveCurso.'');
   }
 
 ?>

@@ -9,6 +9,8 @@
   $matricula= $_SESSION['matricula'];
   if(isset($_GET['clave'])){
     $claveCurso=$_GET['clave'];
+    $idUnidad=$_GET['idUnidad'];
+    $numUnidad=$_GET['numUnidad'];
     $result1=$conn->query("CALL mostrarCurso('$claveCurso')");
     foreach($result1 as $r1){
       $nombre=$r1['nombre'];
@@ -68,73 +70,199 @@
   </div>
 
 
-  <!-- Contenido -->
-  <div class="container-lg">
-    <!-- Titulo -->
-    <div class="row justify-content-center align-items-center my-3">
-      <h1 class="font-weight-light text-center mr-3">Gráfica de la Unidad 1</h1>
-    </div><br>
+  <!-- Titulo -->
+    <div class="row justify-content-center align-items-center my-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <?php
+            echo '<a href="contenidoMateria.php?clave='.$claveCurso.'">'.$nombre.'</a>';
+          ?>
+        </li>
+        <li class="breadcrumb-item">
+          <?php
+            echo '<a href="alumnosUnidades.php?clave='.$claveCurso.'&idUnidad='.$idUnidad.'&numUnidad='.$numUnidad.'">Unidad '.$numUnidad.'</a>';
+          ?>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Grafica de la unidad <?php echo $numUnidad; ?></li>
+      </ol>
+    </nav>
+    </div>
 
+<?php
+  $contador=0;
+  $examenF=0;
+  $tareasF=0;
+  $asistenciasF=0;
+  $result2=$conn->query("CALL mostrarCalificacionesUnidadGrafica('$idUnidad')");
+  foreach($result2 as $r2){
+    $examenF=$examenF+$r2['calExamenes'];
+    $tareasF=$tareasF+$r2['calTareas'];
+    $asistenciasF=$asistenciasF+$r2['calAsistencias'];
+    $contador=$contador+1;
+  }
+  $result2->closeCursor();
+  $examenF=$examenF/$contador;
+  $tareasF=$tareasF/$contador;
+  $asistenciasF=$asistenciasF/$contador;
+?>
 
  <!-- Contenido -->
       <!-- Lista de alumnos -->
-      <div class="container">
-          <div class="row">
-            <div class="col-6 ">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.0/dist/chart.min.js"></script>
-                        <canvas class="my-4 chartjs-render-monitor" id="myChart"width="332" height="129"></canvas>
-                        <script>
-                    var ctx = document.getElementById('myChart').getContext('2d');
-                    var myChart = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-        labels: ['Evaluaciones', 'Tareas', 'Asistencias'],
-        datasets: [{
-            label: '% de alumnos',
-            data: [20, 30, 50],
-            backgroundColor: [
-                'rgb(255, 99, 132)',
-                'rgb(54, 162, 235)',
-                'rgb(255, 205, 86)'
-            ],
-            hoverOffset: 4
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
-        }
-    }
-});
-                        </script>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md ml-md-auto">
-               <div class="card">
+<div class="container">
+  <div class="row">
+    <div class="col-6 ">
+      <div class="card shadow">
+        <div class="card-body">
+          <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.0/dist/chart.min.js"></script>
+          <canvas class="my-4 chartjs-render-monitor" id="myChart"width="332" height="129"></canvas>
+          <script>
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+              type: 'doughnut',
+              data: {
+                labels: ['Examenes', 'Tareas', 'Asistencias'],
+                datasets: [{
+                  label: '% de alumnos',
+                  data: [<?= json_encode($examenF) ?>, <?= json_encode($tareasF) ?>, <?= json_encode($asistenciasF) ?>],
+                  backgroundColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)'
+                  ],
+                  hoverOffset: 4
+                }]
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            });
+          </script>
+        </div>
+      </div>
+    </div>
+
+
+  <div class="col-md ml-md-auto">
+ 
+    <div class="card">
       <div class="card-body">
         <h5 class="card-title">Resultados y tips</h5>
-        <p class="card-text">
-            De acuerdo a la gráfica el mayor porcetaje de rendimiento de los alumnos en esta unidad es en _Tareas_
-            Y el menor es en Examenes le damos una lista de recomendaciones para que los alumnos mejoren en este rubro:
+        <?php
+          if($tareasF>=8){
+            ?>
+            <p class="card-text">
+              La puntuación en tareas fue de <?php echo $tareasF; ?>.<br>
+              Ha sido excelente, muy buen trabajo.
+            </p>
+            <?php
+          }
+          else if($tareasF<8 && $tareasF>=6){
+            ?>
+            <p class="card-text">
+              La puntuación en tareas fue de <?php echo $tareasF; ?>.<br>
+              Te damos los siguientes tips:
+            </p>
+            <ul class="list-group">
+              <li class="list-group-item">1. Has las tareas más dinamicás.</li>
+              <li class="list-group-item">2. Animalos a que participen en clase y mencionen sus dudas.</li>
+              <li class="list-group-item">3. Pregunta a tus alumnos si tienen algun obstaculo para realizar las tareas y entregarlas</li>
+            </ul>
+            <?php
+          }
+          else{
+            ?>
+            <p class="card-text">
+              La puntuación en tareas fue de <?php echo $tareasF; ?>.<br>
+            </p>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-danger">1. Debes de tener una reunión con los padres de familia para hablar acerca de las tareas que se les dejan a los alumnos.</li>
+            </ul>
+            <?php
+          }
+          ?>
+          <hr>
+          <?php
+          if($asistenciasF>=8){
+            ?>
+            <p class="card-text">
+              La puntuación en asistencias fue de <?php echo $asistenciasF; ?>.<br>
+              Ha sido excelente, muy buen trabajo.
+            </p>
+            <?php
+          }
+          else if($asistenciasF<8 && $asistenciasF>=6){
+            ?>
+            <p class="card-text">
+              La puntuación en asistencias fue de <?php echo $asistenciasF; ?>.<br>
+              Te damos los siguientes tips:
+            </p>
+            <ul class="list-group">
+              <li class="list-group-item">1. Has las clases más dinamicas y propon actividades en grupo.</li>
+              <li class="list-group-item">2. Trata animar con tu voz a los alumnos y evita extender demasiado los temas teoricos.</li>
+              <li class="list-group-item">3. Pregunta a tus alumnos si tienen algun obstaculo para asistir a la clase.</li>
+            </ul>
+            <?php
+          }
+          else{
+            ?>
+            <p class="card-text">
+              La puntuación en asistencias fue de <?php echo $asistenciasF; ?>.<br>
+            </p>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-danger">1. Debes de tener una reunión con los padres de familia para hablar acerca de la asistencia que se les dejan a los alumnos.</li>
+            </ul>
+            <?php
+          }
+          ?>
+          <hr>
+          <?php
+          if($examenF>=8){
+            ?>
+            <p class="card-text">
+              La puntuación en examenes fue de <?php echo $examenF; ?>.<br>
+              Ha sido excelente, muy buen trabajo.
+            </p>
+            <?php
+          }
+          else if($examenF<8 && $examenF>=6){
+            ?>
+            <p class="card-text">
+              La puntuación en examenes fue de <?php echo $examenF; ?>.<br>
+              Te damos los siguientes tips:
+            </p>
+            <ul class="list-group">
+              <li class="list-group-item">1. Menciona y aplica técnicas de estudio.</li>
+              <li class="list-group-item">2. Animalos a que participen en clase y mencionen sus dudas.</li>
+              <li class="list-group-item">3. Fijales metas con actividades de repaso.</li>
+            </ul>
+            <?php
+          }
+          else{
+            ?>
+            <p class="card-text">
+              La puntuación en examenes fue de <?php echo $examenF; ?>.<br>
+            </p>
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-danger">1. Debes de tener una reunión con los padres de familia para hablar acerca de estos resultados.</li>
+            </ul>
+            <?php
+          }
+        ?>
+      </div>
+
+
+    </div>
+  </div>
 
 
 
-        </p>
-        <ul class="list-group">
-            <li class="list-group-item">1. Menciona y aplica tpecnicas de estudio </li>
-            <li class="list-group-item">2. Animalos a que participen en clase y mencionen sus dudas</li>
-            <li class="list-group-item">3. Fijales metas con actividades de repaso</li>
-        </ul>
-    </div>
-    </div>
-            </div>
-        </div>
-    </div>
+  </div>
+</div>
 
 
 

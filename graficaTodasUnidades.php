@@ -18,12 +18,20 @@
       $asistencias=$r1['asistencias'];
     }
     $result1->closeCursor();
-    $result3=$conn->query("CALL contarAlumnos('$claveCurso')");
-    foreach($result3 as $r3){
-      $numeroAlumnos=$r3[0];
-    }
-    $result3->closeCursor(); 
   }
+  $result5=$conn->query("CALL obtenerRubrosEvaluacion('$claveCurso')");
+  foreach($result5 as $r5){
+    $rubroExamen=$r5['examen'];
+    $rubroTareas=$r5['tareas'];
+    $rubroAsistencias=$r5['asistencias'];
+  }
+  $result5->closeCursor();
+
+  $result3=$conn->query("CALL contarAlumnos('$claveCurso')");
+  foreach($result3 as $r3){
+    $numeroAlumnos=$r3[0];
+  }
+  $result3->closeCursor(); 
 
 ?>
 <!DOCTYPE html>
@@ -69,12 +77,37 @@
 
 
   <!-- Contenido -->
-  <div class="container-lg">
-    <!-- Titulo -->
-    <div class="row justify-content-center align-items-center my-3">
-      <h1 class="font-weight-light text-center mr-3">Materia 1</h1>
-    </div><br>
+  <!-- Titulo -->
+   <div class="row justify-content-center align-items-center my-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+        <?php
+          echo '<a href="contenidoMateria.php?clave='.$claveCurso.'">'.$nombre.'</a>';
+        ?>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Grafica de calificaciones finales</li>
+      </ol>
+    </nav>
+    </div>
 
+<?php
+  $contador=0;
+  $examenF=0;
+  $tareasF=0;
+  $asistenciasF=0;
+  $result2=$conn->query("CALL mostrarCalificacionesFinalesGrafica('$claveCurso')");
+  foreach($result2 as $r2){
+    $examenF=$examenF+$r2['calExamenes'];
+    $tareasF=$tareasF+$r2['calTareas'];
+    $asistenciasF=$asistenciasF+$r2['calAsistencias'];
+    $contador=$contador+1;
+  }
+  $result2->closeCursor();
+  $examenF=$examenF/$contador;
+  $tareasF=$tareasF/$contador;
+  $asistenciasF=$asistenciasF/$contador;
+?>
 
  <!-- Contenido -->
   <div class="container-xl">
@@ -95,10 +128,10 @@
                     var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Evaluaciones', 'Tareas', 'Asistencias'],
+        labels: ['Examenes', 'Tareas', 'Asistencias'],
         datasets: [{
             label: '% de alumnos',
-            data: [20, 30, 50],
+            data: [<?= json_encode($examenF) ?>, <?= json_encode($tareasF) ?>, <?= json_encode($asistenciasF) ?>],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
